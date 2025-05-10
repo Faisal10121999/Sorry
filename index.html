@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I'm Sorry, My Love</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --color-bg: linear-gradient(to right, #fce4ec, #fff1f5); 
+      --color-accent: #ff80ab;
+      --color-text: #3e2723;
+      --color-glow: #ff4081;
+      --font-title: 'Great Vibes', cursive;
+      --font-body: 'Poppins', sans-serif;
+      --button-color-1: #ff80ab;
+      --button-color-2: #feb47b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-body);
+      color: var(--color-text);
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow-y: scroll;
+    }
+
+    header {
+      padding: 2rem;
+    }
+
+    header h1 {
+      font-family: var(--font-title);
+      font-size: 3.8rem;
+      color: var(--color-accent);
+      text-shadow: 2px 2px 8px rgba(255, 128, 171, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #5e2b3c;
+      font-style: italic;
+      line-height: 1.8;
+      max-width: 700px;
+      margin: 0 auto;
+      letter-spacing: 1px;
+    }
+
+    .gif-animation {
+  width: 280px;
+  height: 280px; /* Make height same as width */
+  object-fit: cover; /* Ensures the GIF fills the box properly */
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(255, 128, 171, 0.3);
+}
+
+
+    .love-letter {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 30px;
+      width: 90%;
+      max-width: 620px;
+      margin: 20px auto;
+      border-radius: 16px;
+      border: 2px dashed #ff80ab;
+      display: none;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .love-letter.open {
+      display: block;
+      animation: fadeSlideIn 0.6s ease-in-out;
+    }
+
+    .love-letter p {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #4b2a3a;
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    .heart-icon {
+      color: #e91e63;
+      font-size: 1.6rem;
+      margin: 0 4px;
+    }
+
+    .open-button {
+      background: linear-gradient(to right, var(--button-color-1), var(--button-color-2));
+      color: #fff;
+      border: none;
+      padding: 14px 34px;
+      font-size: 1.3rem;
+      border-radius: 50px;
+      font-family: var(--font-title);
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(255, 128, 171, 0.3);
+      transition: all 0.3s ease;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .open-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(255, 128, 171, 0.5);
+    }
+
+    nav {
+      margin-top: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      background-color: var(--color-accent);
+      padding: 12px 30px;
+      margin: 10px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    nav a:hover {
+      background-color: var(--color-text);
+      color: var(--color-accent);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--color-glow);
+    }
+
+    /* Heart background animation */
+    @keyframes pulseHeart {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Heart styles for all hearts in the background */
+    .heart-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      pointer-events: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      animation: pulseHeart 2s infinite ease-in-out;
+    }
+
+    .heart {
+      width: 30px;
+      height: 30px;
+      background: #ff80ab;
+      clip-path: polygon(50% 0%, 0% 38%, 50% 100%, 100% 38%);
+      opacity: 0.3;
+      animation: pulseHeart 2s infinite ease-in-out;
+      position: absolute;
+      transform-origin: center;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Heart background animation -->
+  <div class="heart-background">
+    <!-- JavaScript will generate these hearts -->
+  </div>
+
+  <header>
+    <h1>I'm Sorry, My Gualli 💔</h1>
+
+    <button id="openLetterBtn" class="open-button">
+      💌 Open My Heart
+    </button>
+
+    <div class="love-letter" id="loveLetter">
+      <p><span class="heart-icon">❤️</span>🌸My sweetest one, mujhe pata hai ke maine tumhein dukh diya hai aur mein dil se maazrat chahta hoon. Tumhara pyaar mere liye duniya se bhi zyada qeemti hai, aur mein kabhi tumhein kho dena nahi chahta. Mein wada karta hoon ke mein behtar hoon ga, zyada mohabbat karunga, aur zyada sununga. Tum meri jaan ho aur mere dinon ki roshni ho. Meherbani kar ke mujhe maaf kar do, meri jaan🌸<span class="heart-icon">❤️</span></p>
+    </div>
+
+    <img src="https://i.pinimg.com/originals/d4/24/84/d424842c4be2dfec4db08e4342909a2b.gif" alt="Sorry Anime Cat GIF" class="gif-animation" />
+    <img src="https://i.pinimg.com/originals/d7/f5/87/d7f587da442a54025daf47091fe26ba0.gif" alt="Crying Cute Cat or Baby Anime GIF" class="gif-animation" />
+    <nav>
+      <a href="memories.html">🌸 Memories</a>
+      <a href="message.html">💬 Message</a>
+      <a href="thankyou.html">💖 Thank You</a>
+    </nav>
+  </header>
+
+  <script>
+    // JavaScript to generate hearts dynamically
+    const heartContainer = document.querySelector('.heart-background');
+
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+
+      // Random position, size, and animation delay
+      const posX = Math.random() * 100 + '%';
+      const posY = Math.random() * 100 + '%';
+      const size = Math.random() * 30 + 20 + 'px'; // Random size between 20px and 50px
+      const delay = Math.random() * 2 + 's'; // Random animation delay
+
+      heart.style.left = posX;
+      heart.style.top = posY;
+      heart.style.width = size;
+      heart.style.height = size;
+      heart.style.animationDelay = delay;
+
+      heartContainer.appendChild(heart);
+    }
+
+    document.getElementById('openLetterBtn').addEventListener('click', function () {
+      const loveLetter = document.getElementById('loveLetter');
+      loveLetter.classList.toggle('open');
+      this.textContent = loveLetter.classList.contains('open') ? '💌 Close My Heart' : '💌 Open My Heart';
+    });
+  </script>
+</body>
+</html>

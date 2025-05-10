@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Message</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --color-accent: #ffb6c1;
+      --color-button-bg: #ffcad4;
+      --color-button-hover: #ffb3c1;
+      --font-title: 'Playfair Display', serif;
+      --font-body: 'Roboto', sans-serif;
+      --color-glow: #ff69b4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffc0cb, #ff69b4);
+      font-family: var(--font-body);
+      color: #000;
+      line-height: 1.8;
+      padding: 2rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      background: #fff;
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: var(--color-accent);
+      text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
+    }
+
+    .highlight {
+      color: #000;
+      font-size: px;
+      font-family: var(--font-body);
+    }
+
+    .heart-icon {
+      font-size: 3rem;
+      color: var(--color-accent);
+      animation: heartBeat 1s infinite;
+    }
+
+    .message-container {
+      background: linear-gradient(to right, rgba(255, 182, 193, 0.5), rgba(255, 240, 245, 0.8));
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+      backdrop-filter: blur(5px);
+      margin-bottom: 2rem;
+    }
+
+    .gif-image {
+      width: 160px;
+      height: auto;
+      border-radius: 15px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    nav a {
+      background-color: var(--color-button-bg);
+      color: #000;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+    }
+
+    nav a:hover {
+      background-color: var(--color-button-hover);
+      transform: scale(1.05);
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      25%, 75% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+    }
+
+    .love-letter {
+      display: none;
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    .love-letter.open {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .open-button {
+      padding: 10px 20px;
+      background: linear-gradient(to right, var(--color-accent), var(--color-button-hover));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 2rem;
+    }
+
+    .open-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--color-glow);
+    }
+
+    /* Rose floating animation */
+    .rose {
+      position: absolute;
+      font-size: 24px;
+      animation: floatRose 10s linear infinite;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    @keyframes floatRose {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 30+ glowing roses -->
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const rose = document.createElement('div');
+      rose.className = 'rose';
+      rose.textContent = '🌹';
+      rose.style.left = Math.random() * 100 + 'vw';
+      rose.style.animationDelay = Math.random() * 10 + 's';
+      rose.style.fontSize = `${Math.random() * 10 + 20}px`;
+      document.body.appendChild(rose);
+    }
+  </script>
+
+  <section class="container">
+    <h2>My Sweetheart <span class="heart-icon">💖</span></h2>
+
+    <button id="openLetterBtn" class="open-button">Open My Heart</button>
+
+    <div class="love-letter" id="loveLetter">
+      <div class="message-container">
+        <p class="highlight">
+          🌸Tum mera dil hoon, meri khushi hoon, mera sab kuch hoon.Tumhare khushi meri sabse badi tarjeeh hain, aur agar kabhi maine tumhe koi dukh diya ho, toh mein dil se maazrat chahta hoon.
+Yeh jaan le ke mein hamesha tumhare saath hoon, tumhe har guzarta din zyada mohabbat karta hoon aur tumhse hamesha mohabbat karta raho ga🌸</p>
+        <img class="gif-image" src="https://i.pinimg.com/originals/7a/a2/c9/7aa2c9e4f7ef01e65b5469d4a331baab.gif" alt="Cute crying cat gif"/>
+      </div>
+    </div>
+
+    <nav>
+      <a href="memories.html">Our Memories</a>
+      <a href="thankyou.html">Thank You</a>
+    </nav>
+  </section>
+
+  <script>
+    document.getElementById('openLetterBtn').addEventListener('click', function() {
+      const loveLetter = document.getElementById('loveLetter');
+      loveLetter.classList.toggle('open');
+      this.textContent = loveLetter.classList.contains('open') ? 'Close My Heart' : 'Open My Heart';
+    });
+  </script>
+</body>
+</html>

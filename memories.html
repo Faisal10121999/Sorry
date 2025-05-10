@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Special Memories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&family=Pacifico&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --color-bg: #fff0f6;
+      --color-accent: #f8a5c2;
+      --color-text: #5e375c;
+      --color-glow: #ff69b4;
+      --font-title: 'Pacifico', cursive;
+      --font-body: 'Roboto', sans-serif;
+      --button-color-1: #f8a5c2;
+      --button-color-2: #fcd1e1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      line-height: 1.6;
+      padding: 2rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background hearts animation */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 10s infinite ease-in;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+        opacity: 1;
+      }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: var(--color-accent);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      width: 80%;
+      max-width: 400px;
+      margin: 1rem 0 0.5rem 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(248, 165, 194, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    img:hover {
+      transform: scale(1.03);
+    }
+
+    .caption {
+      font-size: 0.95rem;
+      color: #a95b8f;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .memory-text {
+      background: linear-gradient(to bottom right, rgba(255, 192, 203, 0.3), rgba(255, 255, 255, 0.4));
+      padding: 30px;
+      width: 85%;
+      max-width: 600px;
+      margin: 0 auto 1.5rem auto;
+      border-radius: 18px;
+      border: 2px dashed var(--color-accent);
+      box-shadow: 0 0 20px rgba(248, 165, 194, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .memory-text.open {
+      display: block;
+      animation: fadeSlide 0.6s ease-in-out;
+    }
+
+    .gif-container {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .gif-container.open {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .gif-image {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+    }
+
+    nav {
+      margin-top: 2.5rem;
+    }
+
+    .nav-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(to right, var(--button-color-2), var(--button-color-1));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 1rem 1rem 0 1rem;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 0 10px rgba(248, 165, 194, 0.3);
+    }
+
+    .nav-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--color-glow);
+    }
+
+    @keyframes fadeSlide {
+      0% {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .open-button {
+      padding: 12px 24px;
+      background: linear-gradient(to right, var(--button-color-1), var(--button-color-2));
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 10px rgba(248, 165, 194, 0.4);
+    }
+
+    .open-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--color-glow);
+    }
+
+    .heart-icon {
+      color: var(--color-accent);
+      font-size: 1.4rem;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="hearts" id="heartsContainer"></div>
+
+  <section class="container">
+    <h2>Our Cherished Moments <span class="heart-icon">💖</span></h2>
+
+    <button id="openMemoryBtn" class="open-button">Open Our Moment 💌</button>
+
+    <div class="memory-text" id="memoryText">
+      <p>💗Jab maine tumhein pehli baar dekha, toh maine apna dil kho diya. Mein sochta raha... kya yeh wahi hai jiska mein apni zindagi bhar se intezaar kar raha tha💗</p>
+    </div>
+
+    <div class="gif-container" id="gifContainer">
+      <img src="https://i.pinimg.com/originals/f5/c0/02/f5c0027466baf80c532ea06401602ee3.gif" alt="Cute Crying Cat GIF" class="gif-image">
+      <img src="https://i.pinimg.com/originals/16/af/59/16af59f41910eaed4ddbe116535fa84a.gif" alt="Cute Crying Anime Cat or Baby GIF" class="gif-image">
+    </div>
+
+    <nav>
+      <a href="index.html" class="nav-button">Back to My Heart</a>
+      <a href="message.html" class="nav-button">Message</a>
+    </nav>
+  </section>
+
+  <script>
+    // Open/close memory toggle
+    document.getElementById('openMemoryBtn').addEventListener('click', function () {
+      const memoryText = document.getElementById('memoryText');
+      const gifContainer = document.getElementById('gifContainer');
+      memoryText.classList.toggle('open');
+      gifContainer.classList.toggle('open');
+      this.textContent = memoryText.classList.contains('open') ? 'Close Our Moment 💌' : 'Open Our Moment 💌';
+    });
+
+    // Generate animated hearts
+    const heartsContainer = document.getElementById('heartsContainer');
+    for (let i = 0; i < 35; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+      heart.style.opacity = Math.random();
+      heart.style.transform = `translateY(100vh) rotate(45deg) scale(${0.5 + Math.random()})`;
+      heartsContainer.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
