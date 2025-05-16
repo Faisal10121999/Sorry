@@ -1,247 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>I'm Sorry, My Love</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I’m Sorry, My Love</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --color-bg: linear-gradient(to right, #fce4ec, #fff1f5); 
-      --color-accent: #ff80ab;
-      --color-text: #3e2723;
-      --color-glow: #ff4081;
+      --bg-gradient: linear-gradient(135deg, #ffe4e1, #fff5f7);
+      --accent: #ff80ab;
+      --text-color: #4a2c2a;
+      --shine: #ffadc6;
       --font-title: 'Great Vibes', cursive;
       --font-body: 'Poppins', sans-serif;
-      --button-color-1: #ff80ab;
-      --button-color-2: #feb47b;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow-y: auto; }
     body {
-      background: var(--color-bg);
+      background: var(--bg-gradient);
+      background-size: cover;
       font-family: var(--font-body);
-      color: var(--color-text);
-      text-align: center;
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
       padding: 2rem;
       position: relative;
-      overflow-y: scroll;
     }
 
-    header {
+    /* Background Love Animations */
+    .animation-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .animation-container .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      color: rgba(255,64,129,0.8);
+      animation: floatUp 8s linear infinite;
+      user-select: none;
+      opacity: 0.7;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .wrapper {
+      max-width: 600px;
+      width: 100%;
       padding: 2rem;
+      position: relative;
+      z-index: 1;
+      margin-top: 3rem;
+      background: transparent;
     }
 
     header h1 {
       font-family: var(--font-title);
-      font-size: 3.8rem;
-      color: var(--color-accent);
-      text-shadow: 2px 2px 8px rgba(255, 128, 171, 0.4);
+      font-size: 3rem;
+      background: linear-gradient(90deg, #ff9ec9 0%, #ff80ab 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 0 0 8px rgba(255,128,171,0.5);
+      text-align: center;
       margin-bottom: 1rem;
+      line-height: 1.2;
     }
 
-    header p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      color: #5e2b3c;
-      font-style: italic;
-      line-height: 1.8;
-      max-width: 700px;
-      margin: 0 auto;
-      letter-spacing: 1px;
-    }
-
-    .gif-animation {
-  width: 280px;
-  height: 280px; /* Make height same as width */
-  object-fit: cover; /* Ensures the GIF fills the box properly */
-  margin: 20px auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(255, 128, 171, 0.3);
-}
-
-
-    .love-letter {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 30px;
-      width: 90%;
-      max-width: 620px;
-      margin: 20px auto;
+    .text-container, .love-letter {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 16px;
-      border: 2px dashed #ff80ab;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 2px solid var(--accent);
+      overflow-wrap: break-word;
+    }
+    .text-container p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #5e3a3a;
+      text-align: center;
+    }
+    .love-letter {
       display: none;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      transition: all 0.4s ease-in-out;
+      animation: fadeIn 0.4s ease-in-out;
     }
-
-    .love-letter.open {
-      display: block;
-      animation: fadeSlideIn 0.6s ease-in-out;
-    }
-
+    .love-letter.open { display: block; }
     .love-letter p {
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: #4b2a3a;
-      text-align: left;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #5e3a3a;
     }
 
-    .heart-icon {
-      color: #e91e63;
-      font-size: 1.6rem;
-      margin: 0 4px;
-    }
-
-    .open-button {
-      background: linear-gradient(to right, var(--button-color-1), var(--button-color-2));
+    .btn-open {
+      background: var(--accent);
       color: #fff;
-      border: none;
-      padding: 14px 34px;
-      font-size: 1.3rem;
-      border-radius: 50px;
       font-family: var(--font-title);
+      font-size: 1.2rem;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 6px 15px rgba(255,128,171,0.4);
       cursor: pointer;
-      box-shadow: 0 8px 15px rgba(255, 128, 171, 0.3);
-      transition: all 0.3s ease;
-      margin: 20px auto;
+      margin: 0 auto 2rem;
       display: block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-open:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(255,128,171,0.5);
     }
 
-    .open-button:hover {
+    .gif-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .gif-row img {
+      width: 45%;
+      max-width: 200px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(255,128,171,0.4);
+      transition: transform 0.3s;
+    }
+    .gif-row img:hover {
       transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(255, 128, 171, 0.5);
     }
 
     nav {
+      text-align: center;
       margin-top: 2rem;
     }
-
     nav a {
-      text-decoration: none;
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      background: var(--accent);
       color: #fff;
-      background-color: var(--color-accent);
-      padding: 12px 30px;
-      margin: 10px;
+      text-decoration: none;
       border-radius: 12px;
       font-weight: bold;
-      transition: all 0.3s ease;
-      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.2s;
     }
-
     nav a:hover {
-      background-color: var(--color-text);
-      color: var(--color-accent);
-      transform: scale(1.1);
-      box-shadow: 0 0 15px var(--color-glow);
+      background: #fff;
+      color: var(--accent);
+      transform: scale(1.05);
     }
 
-    /* Heart background animation */
-    @keyframes pulseHeart {
-      0% {
-        transform: scale(1);
-        opacity: 0.8;
-      }
-      50% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0.8;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Heart styles for all hearts in the background */
-    .heart-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
-      pointer-events: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      animation: pulseHeart 2s infinite ease-in-out;
-    }
-
-    .heart {
-      width: 30px;
-      height: 30px;
-      background: #ff80ab;
-      clip-path: polygon(50% 0%, 0% 38%, 50% 100%, 100% 38%);
-      opacity: 0.3;
-      animation: pulseHeart 2s infinite ease-in-out;
-      position: absolute;
-      transform-origin: center;
+    @media (max-width: 600px) {
+      .gif-row img { width: 120px; }
+      header h1 { font-size: 2.5rem; }
+      .text-container, .love-letter { padding: 0.8rem 1rem; }
     }
 
   </style>
 </head>
 <body>
-  <!-- Heart background animation -->
-  <div class="heart-background">
-    <!-- JavaScript will generate these hearts -->
+  <!-- Love animation layer -->
+  <div class="animation-container" id="animation-container"></div>
+
+  <div class="wrapper">
+    <header>
+      <h1>Sorry, Gualli Amo Miss Diana 💔</h1>
+      <button id="openBtn" class="btn-open">💌 Open My Heart</button>
+      <div id="letter" class="love-letter">
+        <p>❤️🌸My sweetest one, mujhe pata hai ke maine tumhein dukh diya hai aur mein dil se maazrat chahta hoon. Tumhara pyaar mere liye duniya se bhi zyada qeemti hai, aur mein kabhi tumhein kho dena nahi chahta. Mein wada karta hoon ke mein behtar hoon ga, zyada mohabbat karunga, aur zyada sununga. Tum meri jaan ho aur mere dinon ki roshni ho. Meherbani kar ke mujhe maaf kar do, meri jaan🌸❤️</p>
+      </div>
+
+      <div class="gif-row">
+        <img src="https://i.pinimg.com/originals/d4/24/84/d424842c4be2dfec4db08e4342909a2b.gif" alt="sorry cat">
+        <img src="https://i.pinimg.com/originals/d7/f5/87/d7f587da442a54025daf47091fe26ba0.gif" alt="crying">
+      </div>
+
+      <nav>
+        <a href="memories.html">🌸 Memories</a>
+        <a href="message.html">💬 Message</a>
+        <a href="thankyou.html">💖 Thank You</a>
+      </nav>
+    </header>
   </div>
 
-  <header>
-    <h1>I'm Sorry, My Gualli 💔</h1>
-
-    <button id="openLetterBtn" class="open-button">
-      💌 Open My Heart
-    </button>
-
-    <div class="love-letter" id="loveLetter">
-      <p><span class="heart-icon">❤️</span>🌸My sweetest one, mujhe pata hai ke maine tumhein dukh diya hai aur mein dil se maazrat chahta hoon. Tumhara pyaar mere liye duniya se bhi zyada qeemti hai, aur mein kabhi tumhein kho dena nahi chahta. Mein wada karta hoon ke mein behtar hoon ga, zyada mohabbat karunga, aur zyada sununga. Tum meri jaan ho aur mere dinon ki roshni ho. Meherbani kar ke mujhe maaf kar do, meri jaan🌸<span class="heart-icon">❤️</span></p>
-    </div>
-
-    <img src="https://i.pinimg.com/originals/d4/24/84/d424842c4be2dfec4db08e4342909a2b.gif" alt="Sorry Anime Cat GIF" class="gif-animation" />
-    <img src="https://i.pinimg.com/originals/d7/f5/87/d7f587da442a54025daf47091fe26ba0.gif" alt="Crying Cute Cat or Baby Anime GIF" class="gif-animation" />
-    <nav>
-      <a href="memories.html">🌸 Memories</a>
-      <a href="message.html">💬 Message</a>
-      <a href="thankyou.html">💖 Thank You</a>
-    </nav>
-  </header>
-
   <script>
-    // JavaScript to generate hearts dynamically
-    const heartContainer = document.querySelector('.heart-background');
+    // Toggle love letter
+    document.getElementById('openBtn').onclick = () => {
+      const l = document.getElementById('letter');
+      l.classList.toggle('open');
+      openBtn.textContent = l.classList.contains('open') ? '💌 Close My Heart' : '💌 Open My Heart';
+    };
 
-    for (let i = 0; i < 30; i++) {
+    // Floating hearts
+    const animContainer = document.getElementById('animation-container');
+    const vw = window.innerWidth;
+    for(let i=0; i<20; i++){
       const heart = document.createElement('div');
-      heart.classList.add('heart');
-
-      // Random position, size, and animation delay
-      const posX = Math.random() * 100 + '%';
-      const posY = Math.random() * 100 + '%';
-      const size = Math.random() * 30 + 20 + 'px'; // Random size between 20px and 50px
-      const delay = Math.random() * 2 + 's'; // Random animation delay
-
-      heart.style.left = posX;
-      heart.style.top = posY;
-      heart.style.width = size;
-      heart.style.height = size;
-      heart.style.animationDelay = delay;
-
-      heartContainer.appendChild(heart);
+      heart.className = 'heart';
+      heart.textContent = '❤️';
+      heart.style.left = Math.random()*vw + 'px';
+      heart.style.fontSize = (Math.random()*1 + 1) + 'rem';
+      heart.style.animationDelay = Math.random()*5 + 's';
+      animContainer.appendChild(heart);
     }
-
-    document.getElementById('openLetterBtn').addEventListener('click', function () {
-      const loveLetter = document.getElementById('loveLetter');
-      loveLetter.classList.toggle('open');
-      this.textContent = loveLetter.classList.contains('open') ? '💌 Close My Heart' : '💌 Open My Heart';
-    });
   </script>
 </body>
 </html>

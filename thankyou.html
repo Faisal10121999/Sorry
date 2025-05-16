@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You & Promise</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&family=Pacifico&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
-      --color-bg1: #ffe6f0;
-      --color-bg2: #fff0f5;
+      --color-bg1-dark: #1a1a1a;
+      --color-bg2-dark: #333333;
       --color-accent: #e8c1d8;
-      --color-text: #4a2f46;
+      --color-text: #f0eefa;
       --font-title: 'Pacifico', cursive;
       --font-body: 'Roboto', sans-serif;
     }
@@ -27,41 +27,67 @@
       color: var(--color-text);
       line-height: 1.6;
       padding: 2rem;
-      background: linear-gradient(135deg, var(--color-bg1), var(--color-bg2));
+      background: linear-gradient(135deg, var(--color-bg1-dark), var(--color-bg2-dark));
       overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
     }
 
-    .kiss-container {
+    /* ————— Background animation container ————— */
+    #animation-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       pointer-events: none;
+      overflow: hidden;
       z-index: 0;
     }
 
+    /* Floating kisses */
     .kiss {
       position: absolute;
+      bottom: -40px;
       font-size: 2rem;
       animation: floatKiss 6s linear infinite;
       opacity: 0.8;
       color: #ff4f7b;
       text-shadow: 0 0 8px rgba(255, 105, 135, 0.5);
+      user-select: none;
+    }
+    @keyframes floatKiss {
+      0%   { transform: translateY(0)   scale(0.8) rotate(0deg); opacity: 0.6; }
+      50%  { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    @keyframes floatKiss {
-      0% {
-        transform: translateY(100vh) scale(0.8) rotate(0deg);
-        opacity: 0.6;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1.2) rotate(360deg);
-        opacity: 0;
-      }
+    /* Blinking hearts */
+    .blink-heart {
+      position: absolute;
+      bottom: -30px;
+      font-size: 1.8rem;
+      color: #ff2d55;
+      opacity: 0.8;
+      animation: blink 2s infinite ease-in-out;
+      user-select: none;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 0.2; transform: scale(0.8); }
+      50%     { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Glowing hearts */
+    .glow-heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 2.2rem;
+      color: #ff496c;
+      text-shadow: 0 0 8px rgba(255, 73, 108, 0.6);
+      animation: glow 3s infinite ease-in-out;
+      user-select: none;
+    }
+    @keyframes glow {
+      0%,100% { text-shadow: 0 0 4px rgba(255,73,108,0.4); }
+      50%     { text-shadow: 0 0 16px rgba(255,73,108,0.8); }
     }
 
     .container {
@@ -83,8 +109,26 @@
     p {
       font-size: 1.25rem;
       margin-bottom: 2rem;
-      color: #6d375a;
+      color: #f0eefa;
       font-style: italic;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow:
+        4px 4px 15px rgba(0,0,0,0.2),
+        inset 0 0 10px rgba(255,255,255,0.6),
+        inset 0 2px 6px rgba(255,255,255,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    p:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        6px 6px 25px rgba(0,0,0,0.3),
+        inset 0 0 12px rgba(255,255,255,0.7),
+        inset 0 3px 8px rgba(255,255,255,0.4);
     }
 
     .love-text {
@@ -106,86 +150,117 @@
       border: none;
       margin-top: 1.5rem;
       margin-inline: 0.5rem;
-      box-shadow: 0 8px 20px rgba(249, 116, 143, 0.4);
+      box-shadow: 0 8px 20px rgba(249,116,143,0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
       display: inline-block;
     }
-
     button:hover, .nav-button:hover {
       transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(249, 116, 143, 0.6);
+      box-shadow: 0 10px 25px rgba(249,116,143,0.6);
     }
 
-    .gif-container {
+    .gif-wrapper {
+      width: 100%;
       display: flex;
       justify-content: center;
-      gap: 1rem;
       margin-top: 2rem;
     }
-
-    .gif-container img {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease-in-out;
+    .gif-container {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: nowrap;
+      justify-content: center;
     }
-
+    .gif-container img {
+      flex: 0 0 auto;
+      width: 160px; height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border: 3px solid #f5f5f5;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
     .gif-container img:hover {
       transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      border-color: #ff69b4;
     }
-
+    @media (max-width:768px) {
+      .gif-container img { width: 120px; }
+    }
   </style>
-
-  <script>
-    // Floating kisses
-    document.addEventListener("DOMContentLoaded", () => {
-      const kissContainer = document.createElement("div");
-      kissContainer.className = "kiss-container";
-      document.body.appendChild(kissContainer);
-
-      for (let i = 0; i < 30; i++) {
-        const kiss = document.createElement("div");
-        kiss.className = "kiss";
-        kiss.textContent = "💋";
-        kiss.style.left = Math.random() * 100 + "vw";
-        kiss.style.animationDuration = 4 + Math.random() * 4 + "s";
-        kiss.style.fontSize = 1.5 + Math.random() * 2 + "rem";
-        kissContainer.appendChild(kiss);
-      }
-
-      // Scroll to top
-      document.getElementById("scrollToTop").addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    });
-  </script>
 </head>
+
 <body>
+  <!-- animation container must be first in body so all floats sit behind -->
+  <div id="animation-container"></div>
+
   <section class="container">
     <h2>💖 Thank You, My Love 💖</h2>
     <p>
-      Thank you for your endless patience and the warm love you always share. <br />
-      I promise to listen more, hold you tighter, and cherish every heartbeat with you. <br />
+      Thank you for your endless patience and the warm love you always share. <br/>
+      I promise to listen more, hold you tighter, and cherish every heartbeat with you. <br/>
       You are my sunshine, my heart, my everything. 🌸
     </p>
 
     <p class="love-text">Forever yours 💞, with all my love 💌</p>
 
-    <div class="gif-container">
-      <img src="https://i.pinimg.com/originals/33/f5/b5/33f5b56f970cc454fa91b41a0d6acd8b.gif" alt="Cute Cat Crying GIF">
-      <img src="https://gifdb.com/images/high/love-cute-blowing-hearts-sticker-dt47yz331dp4egtx.gif" alt="Cute Blowing Hearts Anime Baby GIF">
-      <img src="https://i.pinimg.com/originals/f8/be/cb/f8becb4e035e206d0dda352e1f9526df.gif" alt="Cute Cat Crying GIF 2">
-      <img src="https://i.pinimg.com/originals/2d/c8/8f/2dc88ffcbdce75ecb53272379d1a7839.gif" alt="Cute Baby Crying GIF">
-      <img src="https://i.pinimg.com/originals/5a/27/71/5a2771ce1db5e81821746a3df134069b.gif" alt="Cute Love Kiss GIF">
+    <div class="gif-wrapper">
+      <div class="gif-container">
+        <img src="https://i.pinimg.com/originals/2d/c8/8f/2dc88ffcbdce75ecb53272379d1a7839.gif" alt="Cute Baby Crying">
+        <img src="https://i.pinimg.com/originals/33/f5/b5/33f5b56f970cc454fa91b41a0d6acd8b.gif" alt="Cute Cat Crying">
+        <img src="https://gifdb.com/images/high/love-cute-blowing-hearts-sticker-dt47yz331dp4egtx.gif" alt="Anime Baby Blowing Hearts">
+        <img src="https://i.pinimg.com/originals/5a/27/71/5a2771ce1db5e81821746a3df134069b.gif" alt="Love Kiss">
+        <img src="https://i.pinimg.com/originals/f8/be/cb/f8becb4e035e206d0dda352e1f9526df.gif" alt="Cat Crying 2">
+      </div>
     </div>
 
-    <div style="margin-top: 2rem;">
+    <div style="margin-top:2rem;">
       <a href="message.html" class="nav-button">💌 Personal Message</a>
-      <a href="index.html" class="nav-button">🙏 Apology</a>
+      <a href="index.html"   class="nav-button">🙏 Apology</a>
     </div>
   </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("animation-container");
+      const vw = window.innerWidth, vh = window.innerHeight;
+
+      function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+      // floating kisses
+      for(let i=0;i<15;i++){
+        const kiss = document.createElement("div");
+        kiss.className = "kiss";
+        kiss.textContent = "💋";
+        kiss.style.left          = `${Math.random()*vw}px`;
+        kiss.style.animationDelay= `${Math.random()*6}s`;
+        kiss.style.fontSize      = `${randInt(18,32)}px`;
+        container.appendChild(kiss);
+      }
+
+      // blinking hearts
+      for(let i=0;i<12;i++){
+        const b = document.createElement("div");
+        b.className = "blink-heart";
+        b.textContent = "💖";
+        b.style.left           = `${Math.random()*vw}px`;
+        b.style.bottom         = `${randInt(-20, vh*0.2)}px`;
+        b.style.animationDelay = `${Math.random()*2}s`;
+        container.appendChild(b);
+      }
+
+      // glowing hearts
+      for(let i=0;i<8;i++){
+        const g = document.createElement("div");
+        g.className = "glow-heart";
+        g.textContent = "❤️";
+        g.style.left           = `${Math.random()*vw}px`;
+        g.style.animationDelay = `${Math.random()*3}s`;
+        container.appendChild(g);
+      }
+    });
+  </script>
 </body>
 </html>
