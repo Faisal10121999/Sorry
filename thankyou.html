@@ -27,7 +27,7 @@
       color: var(--color-text);
       line-height: 1.6;
       padding: 2rem;
-      background: linear-gradient(135deg, var(--color-bg1-dark), var(--color-bg2-dark));
+      background: linear-gradient(135deg, #1a1a1a, #333333);
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
@@ -169,8 +169,10 @@
     .gif-container {
       display: flex;
       gap: 1.5rem;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;   /* allow wrapping on smaller screens */
       justify-content: center;
+      margin: 0 auto;
+      max-width: 100%;
     }
     .gif-container img {
       flex: 0 0 auto;

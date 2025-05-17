@@ -203,9 +203,9 @@
   <div class="hearts" id="heartsContainer"></div>
 
   <section class="container">
-    <h2>Our Cherished Moments <span class="heart-icon">💖</span></h2>
+    <h2>First Look Moment <span class="heart-icon">💖</span></h2>
 
-    <button id="openMemoryBtn" class="open-button">Open Our Moment 💌</button>
+    <button id="openMemoryBtn" class="open-button">Open Memory 💌</button>
 
     <div class="memory-text" id="memoryText">
       <p>💗Jab maine tumhein pehli baar dekha, toh maine apna dil kho diya. Mein sochta raha... kya yeh wahi hai jiska mein apni zindagi bhar se intezaar kar raha tha💗</p>
@@ -217,8 +217,8 @@
     </div>
 
     <nav>
-      <a href="index.html" class="nav-button">Back to My Heart</a>
       <a href="message.html" class="nav-button">Message</a>
+      <a href="index.html" class="nav-button">Back to My Heart</a>
     </nav>
   </section>
 
@@ -228,7 +228,7 @@
       const gifContainer = document.getElementById('gifContainer');
       memoryText.classList.toggle('open');
       gifContainer.classList.toggle('open');
-      this.textContent = memoryText.classList.contains('open') ? 'Close Our Moment 💌' : 'Open Our Moment 💌';
+      this.textContent = memoryText.classList.contains('open') ? 'Close Memory 💌' : 'Open Memory  💌';
     });
 
     const heartsContainer = document.getElementById('heartsContainer');
